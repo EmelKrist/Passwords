@@ -1,46 +1,39 @@
 package taskpassword;
 
+import java.util.Base64;
 import java.util.Scanner;
 
 public class Start {
 
-    /**
-     * Статичные переменные типа String. passwordSample - строка-образец;
-     * inputPassword - пароль, вводимый с консоли;
-     */
-    static String passwordSample = "5555555555ke";
-    static String inputPassword;
-
     public Start() {
-
-        inputPassword(); //вызываем метод для ввода пароля
-        PasswordComparison(); //вызываем метод для сравнения паролей     
-
+        inputPassword();//вызываем метод для ввода данных        
     }
 
     /**
-     * Метод,отвечающий за ввод пароля пользователя из командной строки.
+     * Метод,отвечающий за ввод пароля пользователя и строки-образца из
+     * командной строки.
      */
     public static void inputPassword() {
-
+        //Вводим пароли с консоли и тут же кодируем их с помощью метода Encode
         Scanner pass = new Scanner(System.in);
         System.out.print("Enter your password: ");
-        inputPassword = pass.nextLine();
+        String passwordSample = Encode(pass.nextLine());
+        System.out.print("Repeat your password: ");
+        String inputPassword = Encode(pass.nextLine());
+        //создаем объект класса  PasswordsComparison для сравнения паролей
+        PasswordsComparison PC = new PasswordsComparison(inputPassword, passwordSample);
 
     }
 
     /**
-     * Метод,отвечающий за сравнение строки-образца с введенным паролем.
+     * Метод,отвечающий за кодировку ввдеенных паролей. 
+     * originalInput- строка, которая подвергается кодированию 
+     * encodedString(возвращаемое значение) - та же строка в закодированном виде
      */
-    public static void PasswordComparison() {
-
-        //Если строка-образец и пароль равны
-        if (passwordSample.equals(inputPassword)) {
-            //то выводим в консоль надпись о том,что пароль верный
-            System.out.println("\nThe entered password is correct :)");
-        } else { // иначе выводим надпись, что он не верный
-            System.out.println("\nThe entered password is not correct :(");
-        }
+    public static String Encode(String originalInput) {
+        String encodedString;
+        return encodedString = Base64.getEncoder().
+                encodeToString(originalInput.getBytes());
     }
 
 }
